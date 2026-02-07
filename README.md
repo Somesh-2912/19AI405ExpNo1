@@ -1,6 +1,6 @@
 <h1>ExpNo 1 :Developing AI Agent with PEAS Description</h1>
 <h3>Name: SOMESH SANJAY V </h3>
-<h3>Register Number: 212224060255</h3>
+<h3>Register Number/Staff Id: 212224060255</h3>
 
 
 <h3>AIM:</h3>
@@ -40,56 +40,54 @@
 <p>Treat unhealthy patients in each room. And check for the unhealthy patients in random room</p>
 <h3>STEP 5:</h3>
 <p>Measure the performance parameters: For each treatment performance incremented, for each movement performance decremented</p>
+<h3>PROGRAM</h3>
 
+```import random
+class MedicinePrescribingAgent:
+    def __init__(self):
+        self.performance = 0
+        self.rooms = ["Room1", "Room2"]
+        self.current_room = random.choice(self.rooms)  # Agent starts in a random room
+
+    def sense_environment(self):
+        # Randomly generate temperature between 97 and 102°F
+        temperature = round(random.uniform(97, 102), 1)
+        return temperature
+
+    def prescribe_medicine(self, temperature):
+        if temperature > 98.5:  # Identify unhealthy patient
+            print(f"Patient in {self.current_room} has fever ({temperature}°F). Prescribing medicine.")
+            self.performance += 10   # reward for treatment
+        else:
+            print(f"Patient in {self.current_room} is healthy ({temperature}°F). No medicine required.")
+
+    def move_to_other_room(self):
+        other_room = [room for room in self.rooms if room != self.current_room][0]
+        print(f"Moving from {self.current_room} to {other_room}.")
+        self.current_room = other_room
+        self.performance -= 1  # movement cost
+
+    def run_agent(self, cycles=5):
+        for _ in range(cycles):
+            # Sense the patient's temperature
+            temp = self.sense_environment()
+
+            # Prescribe medicine if needed
+            self.prescribe_medicine(temp)
+
+            # Move to next room
+            self.move_to_other_room()
+
+            print(f"Current Performance: {self.performance}\n")
+
+
+# Run the agent
+agent = MedicinePrescribingAgent()
+agent.run_agent(cycles=6)
+print("Final Performance Score:", agent.performance)
 ```
-import random
-ROOMS = ["Room 1", "Room 2"]
-FEVER_THRESHOLD = 98.5
-environment = {
-    "Room 1": round(random.uniform(97.0, 101.0), 1),
-    "Room 2": round(random.uniform(97.0, 101.0), 1)
-}
-agent_location = "Room 1"
-performance_score = 0
+# OUTPUT:
+<img width="1919" height="680" alt="image" src="https://github.com/user-attachments/assets/9f108027-cbcd-4469-9a35-8a5abe420f7f" />
 
-def check_temperature(room):
-    temp = environment[room]
-    print(f"Checking {room}... Patient temperature: {temp}°F")
-    return temp
-
-def treat_patient(room):
-    global performance_score
-    print(f"Treating patient in {room}... ")
-    performance_score += 1 
-
-def move_to(room):
-    global agent_location, performance_score
-    if agent_location != room:
-        print(f"Moving from {agent_location} to {room}... ")
-        agent_location = room
-        performance_score -= 1  
-print("Medicine Prescribing Agent Simulation Started \n")
-
-for room in ROOMS:
-    move_to(room)
-    temp = check_temperature(room)
-    if temp > FEVER_THRESHOLD:
-        treat_patient(room)
-    else:
-        print(f"No treatment needed in {room}.\n")
-print("\nSimulation Complete!")
-print(f"Final Performance Score: {performance_score}")
-print("Environment State:", environment)
-```
-
-
-OUTPUT:
-
-
-<img width="574" height="264" alt="image" src="https://github.com/user-attachments/assets/7cd3df81-06d2-41fa-973f-0d7cc8698178" />
-
-
-
-RESULT:
-
-Thus the AI agent is developed successfully
+# RESULT:
+ PEAS description for the given AI problem and develop an AI agent was observed successfully.
